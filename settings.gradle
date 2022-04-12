@@ -16,3 +16,4 @@ rootProject.name = "Global Logic App"
 include ':app'
 include ':data'
 include ':domain'
+include ':data-mock'
