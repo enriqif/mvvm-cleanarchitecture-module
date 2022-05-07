@@ -26,17 +26,20 @@ class MainActivity : AppCompatActivity(), NotebookRecyclerAdapter.NotebookClickL
         val view = binding.root
         setContentView(view)
 
+        val includedView: View = binding.shimmerViewContainer!!.progressBar
+
         viewModel = ViewModelProvider(this)[NotebookViewModel::class.java]
-        viewModel.state.observe(this){ listState ->
-            if (!listState.isLoading){
-                binding.progressBar.visibility = View.INVISIBLE
-                if (listState.error.isNotBlank()){
+        viewModel.state.observe(this) { listState ->
+
+            if (!listState.isLoading) {
+                includedView.visibility = View.GONE
+                if (listState.error.isNotBlank()) {
                     binding.errorText.text = listState.error
                     binding.errorText.visibility = View.VISIBLE
-                }
-                else{
+                } else {
                     binding.recyclerView.visibility = View.VISIBLE
-                    notebookAdapter = NotebookRecyclerAdapter(this, listState.notebooks, this)
+                    notebookAdapter =
+                        NotebookRecyclerAdapter(this, listState.notebooks, this)
                     binding.recyclerView.adapter = notebookAdapter
                 }
             }
